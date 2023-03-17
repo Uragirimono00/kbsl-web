@@ -34,7 +34,7 @@
             // 데이터를 localstorage에 저장
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
-            // goto('/');
+            goto('/');
         } catch (error) {
             console.log(error);
             goto('/');

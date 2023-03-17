@@ -5,7 +5,7 @@ const config = {
 	plugins: [sveltekit()],
 	build: {
 		target: 'esnext'
-	},
+	}
 };
 
 export default config;
