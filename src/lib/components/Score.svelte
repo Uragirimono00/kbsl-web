@@ -7,7 +7,7 @@
     let res;
 
     async function loadData() {
-        res = await axios.get('http://52.79.222.211:8090/score', {
+        res = await axios.get('https://api.kbsl.dev/score', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
             },

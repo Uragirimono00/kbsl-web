@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function load({ fetch }){
-    let res = await axios.get('http://52.79.222.211:8090/league', {
+    let res = await axios.get('https://api.kbsl.dev/league', {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },

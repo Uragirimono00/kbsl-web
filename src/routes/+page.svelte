@@ -7,7 +7,6 @@
 </script>
 
 <div aria-label="Main" class="bg-zinc-800">
-
     <div aria-label="Welcome">
         <video class="brightness-50 w-full" src="../../src/lib/assets/images/main.mp4" muted autoplay loop></video>
         <div class="text-white relative flex justify-center">

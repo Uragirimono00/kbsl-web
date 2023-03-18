@@ -19,7 +19,7 @@
 
         try {
             // Get the authentication object using the user's code
-            const AuthRes = await axios.get('http://52.79.222.211:8090/auth/discord?code=' + code.toString(), {
+            const AuthRes = await axios.get('https://api.kbsl.dev/auth/discord?code=' + code.toString(), {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
