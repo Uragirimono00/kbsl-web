@@ -53,7 +53,7 @@
                     <td class="px-6 py-4">{args.modifiedScore}점</td>
                     <td class="px-6 py-4">
                         <button on:click={openPopup}>
-                            <img class="w-10" src="../../src/lib/assets/images/replay.gif" alt="리플레이">
+                            <img class="w-10" src="/replay.gif" alt="리플레이">
                         </button>
                         {#if isPopupOpen}
                             <div class="overlay" on:click={closePopup}>

@@ -13,7 +13,7 @@
 <nav aria-label="Site Nav" class="flex items-center justify-between py-3 bg-zinc-800 px-5">
     <a href="/" class="inline-flex items-center justify-center gap-3">
         <span class="sr-only">Logo</span>
-        <img class="w-20" src="../../src/lib/assets/images/logo.svg" alt="로고"/>
+        <img class="w-20" src="/logo.svg" alt="로고"/>
 <!--        <span class="text-lg text-white font-semibold">KBSL</span>-->
     </a>
     {#each links as { href, title }}
