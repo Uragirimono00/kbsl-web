@@ -8,7 +8,7 @@
 
 <div aria-label="Main" class="bg-zinc-800">
     <div aria-label="Welcome">
-        <video class="brightness-50 w-full" src="../../src/lib/assets/images/main.mp4" muted autoplay loop></video>
+        <video class="brightness-50 w-full" src="assets/images/main.mp4" muted autoplay loop></video>
         <div class="text-white relative flex justify-center">
             <span class="text-3xl text-center py-5">
                 <span class="text-6xl">Welcome <span class="text-blue-500">KB</span><span class="text-red-500">SL</span>!!<br></span>
