@@ -1,6 +1,7 @@
 <script>
     import "../app.css";
     import Navbar from "$lib/components/Navbar.svelte";
+    import Footer from "$lib/components/Footer.svelte";
     import { beforeNavigate } from "$app/navigation";
     import { metadata } from "$lib/app/stores.ts";
     import { site } from "$lib/config";
@@ -27,4 +28,5 @@
 <div>
     <Navbar />
     <slot />
+    <Footer />
 </div>

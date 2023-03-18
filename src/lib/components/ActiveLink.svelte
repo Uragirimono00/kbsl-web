@@ -1,6 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
     export let href = '';
+    export let target = '';
     export let baseClass = '';
     export let defaultClass = '';
     export let activeClass = '';
@@ -9,6 +10,6 @@
         : `${baseClass} ${defaultClass}`;
 </script>
 
-<a {href} class={linkClass}>
+<a {href} class={linkClass} target={target}>
     <slot />
 </a>

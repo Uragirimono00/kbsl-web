@@ -4,6 +4,8 @@
     import { page } from '$app/stores';
     import {redirect} from "@sveltejs/kit";
     import {goto} from "$app/navigation";
+    import { userdata } from "$lib/app/stores.ts";
+    import { user } from "$lib/config";
 
     onMount(async () => {
         const code = await $page.url.searchParams.get("code");
@@ -34,6 +36,9 @@
             // 데이터를 localstorage에 저장
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
+
+            userdata.update(userData => ({ ...userData, isLogin: true }));
+
             goto('/');
         } catch (error) {
             console.log(error);

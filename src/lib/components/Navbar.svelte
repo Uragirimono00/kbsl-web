@@ -13,7 +13,7 @@
 <nav aria-label="Site Nav" class="flex items-center justify-between py-3 bg-zinc-800 px-5">
     <a href="/" class="inline-flex items-center justify-center gap-3">
         <span class="sr-only">Logo</span>
-        <img class="w-20" src="/src/lib/assets/images/logo.svg" alt="로고"/>
+        <img class="w-20" src="../../src/lib/assets/images/logo.svg" alt="로고"/>
 <!--        <span class="text-lg text-white font-semibold">KBSL</span>-->
     </a>
     {#each links as { href, title }}
@@ -33,6 +33,12 @@
             class="inline-flex justify-center items-center gap-3 rounded-full bg-gray-100 px-4 py-1.5">
         <User size={16} class="text-gray-700" />
         <span class="">로그인</span>
+    </button>
+    <button
+            on:click = {() => (window.location.href = "/user/logout")}
+            class="inline-flex justify-center items-center gap-3 rounded-full bg-gray-100 px-4 py-1.5">
+        <User size={16} class="text-gray-700" />
+        <span class="">로그아웃</span>
     </button>
 
 </nav>
