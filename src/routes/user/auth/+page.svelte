@@ -14,7 +14,7 @@
             goto('/');
         }
 
-        console.log(code);
+        // console.log(code);
 
         try {
             // Get the authentication object using the user's code
@@ -31,7 +31,7 @@
                 goto('/');
             }
 
-            console.log(AuthRes.data.data);
+            // console.log(AuthRes.data.data);
 
             // Optionally, you can upsert the user in the DB here
 
@@ -60,3 +60,17 @@
 
 
 </script>
+<div id="loading-spinner" class="flex bg-zinc-900 justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+    <div class="px-3 text-white">로그인 중입니다~!!</div>
+</div>
+
+<style>
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .animate-spin {
+        animation: spin 2s linear infinite;
+    }
+</style>

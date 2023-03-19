@@ -26,7 +26,8 @@
                 const scoreComponent = new Score({
                     target: scoreElement,
                     props: {
-                        songSeq: data.songsList[index].seq
+                        songSeq: data.songsList[index].seq,
+                        index: index
                     }
                 });
 
