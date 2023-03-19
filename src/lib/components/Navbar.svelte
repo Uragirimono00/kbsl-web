@@ -9,7 +9,11 @@
     let links = [
         {
             href: '/league',
-            title: '⚔League'
+            title: '🗡️League'
+        },
+        {
+            href: '/user/beatleader',
+            title: '💎AddUser'
         }
     ];
 
