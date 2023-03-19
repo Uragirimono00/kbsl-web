@@ -1,19 +1,20 @@
 <script>
-    export let message;
+    export let songId;
+    export let songDifficulty;
+    export let songModeType;
     export let onClose;
 
     function closePopup() {
         onClose();
     }
 
-    console.log(message.length)
 </script>
 
 <div class="popup">
-    {#if message.length === 5}
-        <iframe class="w-full h-full" src="https://skystudioapps.com/bs-viewer/?id={message}"></iframe>
+    {#if songId.length === 5}
+        <iframe class="w-full h-full" src="https://skystudioapps.com/bs-viewer/?id={songId}&diffName={songDifficulty}&charName={songModeType}"></iframe>
     {:else}
-        <iframe class="w-full h-full" src="https://replay.beatleader.xyz/?scoreId={message}"></iframe>
+        <iframe class="w-full h-full" src="https://replay.beatleader.xyz/?scoreId={songId}"></iframe>
     {/if}
         </div>
 

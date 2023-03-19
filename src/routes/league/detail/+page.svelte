@@ -2,82 +2,54 @@
     import {onMount} from "svelte";
     import Score from "$lib/components/Score.svelte";
     import PopupContent from '$lib/components/PopupContent.svelte';
+    import LeagueSong from "$lib/components/LeagueSong.svelte";
 
     onMount(async () => {
         await import('tw-elements');
+
+        const clickElements = document.querySelectorAll('.click');
+        clickElements.forEach((clickElement, index) => {
+            clickElement.addEventListener('click', () => {
+                const collapseElement = document.querySelector(`#collapseExample${index + 1}`);
+                const collapseChildElement = collapseElement.querySelector('.rounded-lg');
+
+                // 이미 ScoreComponent가 생성되어 있는지 체크합니다.
+                if (collapseElement.querySelector(`.score-list${index + 1}`) !== null) {
+                    collapseElement.classList.remove('hidden');
+                    return;
+                }
+
+                const scoreElement = document.createElement('div');
+                scoreElement.classList.add(`score-list${index + 1}`);
+
+                // ScoreComponent를 생성하고 scoreElement에 추가합니다.
+                const scoreComponent = new Score({
+                    target: scoreElement,
+                    props: {
+                        songSeq: data.songsList[index].seq
+                    }
+                });
+
+                // scoreElement를 collapseElement에 추가하고, 클래스를 변경합니다.
+                collapseChildElement.appendChild(scoreElement);
+                collapseElement.classList.remove('hidden');
+            });
+        });
     });
-
-    let isPopupOpen = false;
-    let message = 'Hello, world!';
-
-    function openPopup() {
-        isPopupOpen = true;
-    }
-
-    function closePopup() {
-        isPopupOpen = false;
-    }
 
     export let data;
 </script>
 <!--todo: 해당 리그의 포함되어 있는 곡들이 드롭다운 형태로 나오게 한뒤 클릭시 해당 곡의 점수를 보여줌.-->
 <div aria-label="Main" class="bg-zinc-800">
     {#each data.songsList as {...args}, index }
-        <button class="gird grid-cols-1 gap-4 py-4 w-full"
-                on:click
-                type="button"q
-                data-te-collapse-init
-                data-te-ripple-init
-                data-te-ripple-color="light"
-                href="#collapseExample{index + 1}"
-                role="button"
-                aria-expanded="false"
-                aria-controls="collapseExample{index + 1}"
-        >
-            <div class="bg-white space-y-3 p-4 rounded-lg shadow">
-                <div class="flex items-center space-x-2 text-sm">
-                    <div><span class="text-blue-500 font-bold">#{index + 1}</span> {args.songModeType} -
-                        {#if args.songDifficulty === "ExpertPlus"}
-                            <span class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-purple-700 rounded-lg">Expert Plus</span>
-                            {:else if args.songDifficulty === "Expert"}
-                            <span class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-red-500 rounded-lg">{args.songDifficulty}</span>
-                            {:else if args.songDifficulty === "Hard"}
-                            <span class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-orange-400 rounded-lg">{args.songDifficulty}</span>
-                        {:else if args.songDifficulty === "Normal"}
-                            <span class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-sky-400 rounded-lg">{args.songDifficulty}</span>
-                        {:else}
-                            <span class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-green-700 rounded-lg">{args.songDifficulty}</span>
-
-                        {/if}
-                    </div>
-                    <a href="https://beatsaver.com/maps/{args.songId}" target="_blank">
-                    <div class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg">
-                        !bsr {args.songId}
-                    </div>
-                    </a>
-                    <button on:click={openPopup}>미리보기</button>
-                    {#if isPopupOpen}
-                        <div class="overlay" on:click={closePopup}>
-                            <PopupContent message={args.songId} onClose={closePopup}/>
-                        </div>
-                    {/if}
-                </div>
-                <div class="flex  space-x-2 text-sm w-full">
-                    <div class="flex ">
-                        <img src="{args.coverUrl}" alt="리그사진" class="w-40">
-                        <div class="px-5 flex-col ">
-                            <p class="text-3xl">{args.songName}</p>
-                            <p class="text-xl">Mapper: <span class="bg-sky-400 text-white px-3 rounded-full">{args.uploaderName}</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </button>
+        <!--리그 노래 리스트 컴포넌트-->
+        <div class="click">
+            <LeagueSong args={args} index = {index} />
+        </div>
         <div class="!visible hidden" id="collapseExample{index + 1}" data-te-collapse-item>
             <div class="rounded-lg bg-white p-6 shadow-lg">
-                <Score songSeq={args.seq} />
+                <!--점수 컴포넌트-->
             </div>
         </div>
     {/each}
 </div>
-

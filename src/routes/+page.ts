@@ -12,4 +12,6 @@ export async function load({ fetch }){
     });
 
     return res.data;
+
+
 }
