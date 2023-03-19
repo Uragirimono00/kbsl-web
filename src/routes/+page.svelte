@@ -1,13 +1,11 @@
 <script>
-    // import { userdata } from "$lib/app/stores.ts";
-    // console.log("isLogin: " + $userdata.isLogin)
-
     import League from "$lib/components/League.svelte";
+    import { userdata } from "$lib/app/stores.ts";
+    console.log($userdata)
 
     export let data;
 
     const leagueCount = 3;
-
 </script>
 
 <div aria-label="Main" class="bg-zinc-800">

@@ -5,8 +5,9 @@ export interface Metadata {
     description?: string;
     headline?: string;
 }
-export interface Userdata {
-    isLogin?: boolean;
-}
-export const userdata = writable<Userdata>({});
+const Userdata = {
+    userName: 'sample',
+    userSeq: 0
+};
+export const userdata = writable(Userdata);
 export const metadata = writable<Metadata>({});

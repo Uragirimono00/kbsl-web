@@ -1,13 +1,16 @@
-<script lang="ts">
+<script>
     import ActiveLink from './ActiveLink.svelte';
     import User from "carbon-icons-svelte/lib/User.svelte";
     import {PUBLIC_DISCORD_AUTH_URI} from '$env/static/public';
+    import {onMount} from "svelte";
+
     let links = [
         {
             href: '/league',
             title: '⚔League'
         }
     ];
+
 </script>
 
 <nav aria-label="Site Nav" class="flex items-center justify-between py-3 bg-zinc-800 px-5">

@@ -5,7 +5,6 @@
     import {redirect} from "@sveltejs/kit";
     import {goto} from "$app/navigation";
     import { userdata } from "$lib/app/stores.ts";
-    import { user } from "$lib/config";
 
     onMount(async () => {
         const code = await $page.url.searchParams.get("code");
@@ -25,6 +24,13 @@
                 }
             });
 
+            if(AuthRes.data.data.userSeq === 3){
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                alert("인증에 실패하였습니다.")
+                goto('/');
+            }
+
             console.log(AuthRes.data.data);
 
             // Optionally, you can upsert the user in the DB here
@@ -37,7 +43,11 @@
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
 
-            userdata.update(userData => ({ ...userData, isLogin: true }));
+            userdata.update(state => ({
+                ...state,
+                userSeq: AuthRes.data.data.userSeq,
+                userName: AuthRes.data.data.userName
+            }));
 
             goto('/');
         } catch (error) {
@@ -47,5 +57,6 @@
 
 
     })
+
 
 </script>
