@@ -76,11 +76,11 @@
                     </div>
                 {/if}
             </div>
-            <div class="flex  space-x-2 text-sm w-full">
+            <div class="flex  space-x-2 text-sm w-full ">
                 <div class="flex w-full">
-                    <img src="{args.coverUrl}" alt="리그사진" class="w-40 basis-1/6">
+                    <img src="{args.coverUrl}" alt="리그사진" class="w-40">
                     <div class="px-5 flex-col basis-4/6">
-                        <p class="text-3xl">{args.songName}</p>
+                        <p class="text-2xl h-30 overflow-hidden">{args.songName}</p>
                         <p class="text-xl">Mapper: <span
                                 class="bg-sky-400 text-white px-3 rounded-full">{args.uploaderName}</span></p>
                     </div>

@@ -10,7 +10,6 @@
     async function loadData() {
         res = await axios.get('https://api.kbsl.dev/score', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
             },
             params: {
                 songSeq: songSeq,

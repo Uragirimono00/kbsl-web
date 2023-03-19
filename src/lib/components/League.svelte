@@ -39,7 +39,7 @@
                                 <div class="flex">
                                     <img src="{args.imageUrl}" alt="리그사진">
                                     <div class="px-5 flex-col">
-                                        <p class="text-3xl">{args.leagueName}</p>
+                                        <p class="text-2xl">{args.leagueName}</p>
                                         <p>{args.description}</p>
                                     </div>
                                 </div>
