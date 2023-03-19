@@ -6,7 +6,6 @@
     export let index;
 
     let isPopupOpen = false;
-    let message = 'Hello, world!';
 
     function openPopup() {
         isPopupOpen = true;

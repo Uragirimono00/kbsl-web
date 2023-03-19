@@ -23,7 +23,6 @@
 
     //팝업
     let isPopupOpen = false;
-    let message = 'Hello, world!';
 
     function openPopup() {
         isPopupOpen = true;
@@ -57,7 +56,7 @@
                         </button>
                         {#if isPopupOpen}
                             <div class="overlay" on:click={closePopup}>
-                                <PopupContent message={args.scoreSeq} onClose={closePopup}/>
+                                <PopupContent songId={args.scoreSeq} onClose={closePopup}/>
                             </div>
                         {/if}
                     </td>
