@@ -39,7 +39,7 @@
         const input5 = document.createElement('input');
         input5.setAttribute('type', 'hidden');
         input5.setAttribute('name', 'openid.return_to');
-        input5.setAttribute('value', 'http://localhost:3000/user/auth/steam');
+        input5.setAttribute('value', 'https://www.kbsl.dev/user/auth/steam');
         form.appendChild(input5);
 
         // Submit the form
