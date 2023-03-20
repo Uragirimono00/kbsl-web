@@ -23,7 +23,14 @@
 
     async function saveData() {
         const url = `${apiBaseUrl}/user/${$user.Seq}`;
-        const data = {beatleader: beatleaderId};
+
+        const regex = /(\d{17})/; // matches 17 digits
+        const steamId = url.match(regex)[1];
+        if(steamId.isNaN()){
+            alert("조회된 유저가 없습니다.");
+            return;
+        }
+        const data = {beatleader: steamId};
         const response = await axios.put(url, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
