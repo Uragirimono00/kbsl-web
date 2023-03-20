@@ -1,6 +1,7 @@
 <script>
     import {onMount} from "svelte";
     import {page} from "$app/stores";
+    import axios from "axios";
 
     function loginWithSteam() {
         // Set the OpenID endpoint URL
@@ -66,19 +67,29 @@
         const token_url = new URL("https://steamcommunity.com/openid/login");
         const token_url_params = new URLSearchParams(token_params);
 
-        const token_res = await fetch(token_url, {
-            method: "POST",
-            headers: {
-                "Accept-language": "en\r\n",
-                "Content-type": "application/x-www-form-urlencoded\r\n",
-                "Content-Length": `${token_url_params.toString().length}\r\n`
-            },
-            body: token_url_params.toString(),
-        });
+        console.log(token_params)
 
-        const result = await token_res.text();
+        const user_result = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?key=ECE9CF33C5E4DB373E9348F80C600093&steamids=76561199257569878`, {
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded",
+                }
+            }
+        );
+        const json = await user_result.json();
 
-        console.log(token_params);
+        console.log(json)
+
+        // const token_res = await axios.post('https://steamcommunity.com/openid/login', {
+        //     headers: {
+        //         "Accept-language": "en",
+        //         "Content-type": "application/x-www-form-urlencoded",
+        //         "Content-Length": `${token_url_params.toString().length}`
+        //     },
+        //     token_params
+        // });
+        //
+        // const result = await token_res.text();
+
     })
 </script>
 

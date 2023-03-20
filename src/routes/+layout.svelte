@@ -22,6 +22,10 @@
     <meta name="twitter:title" content="" />
     <meta name="og:description" content="" />
     <meta name="twitter:description" content="" />
+    <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+    />
     <!-- <meta property="og:image" content="%svelte.assets%/logo.png" /> -->
 </svelte:head>
 
