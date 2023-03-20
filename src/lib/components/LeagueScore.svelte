@@ -2,8 +2,10 @@
     import {onMount} from 'svelte';
     import PopupContent from '$lib/components/PopupContent.svelte';
     import axios from "axios";
+    import {apiBaseUrl} from "$lib/app/stores.ts";
 
     export let songSeq;
+    export let leagueSeq;
     export let index;
 
 
@@ -16,14 +18,11 @@
         const spinner = document.createElement('div');
         spinner.classList.add('animate-spin', 'rounded-full', 'h-32', 'w-32', 'border-t-2', 'border-b-2', 'border-gray-900');
         loadingSpinner.appendChild(spinner);
-        console.log(index + 1)
         const parent = document.querySelector(`#collapseExample${index + 1}`);
         parent.appendChild(loadingSpinner);
-
-        res = await axios.get('https://api.kbsl.dev/score', {
+        res = await axios.get(`${$apiBaseUrl}/league/${leagueSeq}/${songSeq}`, {
             headers: {},
             params: {
-                songSeq: songSeq,
                 page: 0,
                 elementCnt: 30
             }
@@ -64,7 +63,7 @@
                     <tr class="	">
                         <td class="px-6 py-4">{index + 1}</td>
                         <td class="flex items-center px-6 py-4"><img class="w-10 rounded-xl" src="{args.user.imageUrl}"
-                                                                     alt="profile">&nbsp{args.user.username}</td>
+                                                                     alt="profile">&nbsp{args.user.userName}</td>
                         <td class="px-6 py-4">{(args.accuracy * 100).toFixed(3)}%</td>
                         <td class="px-6 py-4">{args.modifiedScore}점</td>
                         <td class="px-6 py-4">

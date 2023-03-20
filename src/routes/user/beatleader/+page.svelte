@@ -1,42 +1,51 @@
 <script>
     import {onMount} from "svelte";
-    import {userdata} from "$lib/app/stores.ts";
+    import {apiBaseUrl} from "$lib/app/stores.ts";
     import {goto} from "$app/navigation";
     import axios from "axios";
+    import {user} from "$lib/app/stores.ts";
+
+    onMount(async() => {
+            await import('tw-elements');
+            console.log('tw-elements loaded');
+    });
+
+    const unsubscribe = user.subscribe((value) => {
+        console.log('user changed:', value);
+    });
 
     let beatleaderId = '';
 
-    if ($userdata.userSeq === 0) {
-        alert("로그인이 필요한 페이지입니다.");
+    if ($user.seq === 0) {
+        alert("로그인이 필요한 페이지입니다!!");
         goto("/");
     }
-    const API_BASE_URL = 'https://api.kbsl.dev';
 
     async function saveData() {
-        const url = `${API_BASE_URL}/user/${$userdata.userSeq}`;
-        const data = {beatleader: beatleaderId};
+        const url = `${apiBaseUrl}/user/${$user.Seq}`;
+
+        const regex = /(\d{17})/; // matches 17 digits
+        const steamId = url.match(regex)[1];
+        if(steamId.isNaN()){
+            alert("조회된 유저가 없습니다.");
+            return;
+        }
+        const data = {beatleader: steamId};
         const response = await axios.put(url, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             },
             data
         });
-        console.log(beatleaderId);
-        console.log(response.data);
     }
 
-    onMount(async () => {
-        await import('tw-elements');
-    })
 
 </script>
 <div>
-
     <form on:submit|preventDefault={saveData}>
         <div class="flex justify-center bg-zinc-900 text-white break-keep">
             <div class="block max-w-2xl rounded-lg bg-zinc-800 p-6 shadow-lg my-10">
-                <h5
-                        class="mb-2 text-xl font-medium leading-tight">
+                <h5 class="mb-2 text-xl font-medium leading-tight">
                     점수 등록을 위한 BeatLeader ID 입력
                 </h5>
                 <p class="mb-4 text-base ">
@@ -57,11 +66,11 @@
                         <input
                                 type="text"
                                 class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                                id="beatLeaderInput1"
+                                id="beatLeaderInput"
                                 bind:value={beatleaderId}
                                 placeholder="Beatleader"/>
                         <label
-                                for="beatLeaderInput1"
+                                for="beatLeaderInput"
                                 class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-blue-500 peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
                         >Beatleader Profile URL
                         </label>

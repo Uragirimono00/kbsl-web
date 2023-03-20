@@ -2,13 +2,14 @@
 
     import axios from "axios";
     import {onMount} from "svelte";
+    import {apiBaseUrl} from "$lib/app/stores.ts";
 
     export let leagueCount;
 
     let res;
 
     async function loadData() {
-        res = await axios.get('https://api.kbsl.dev/league', {
+        res = await axios.get(`${$apiBaseUrl}/league`, {
             headers: {
             },
             params: {

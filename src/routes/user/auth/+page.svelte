@@ -1,10 +1,11 @@
 <script lang="ts">
     import axios from 'axios';
-    import { onMount } from 'svelte'
+    import {apiBaseUrl} from "$lib/app/stores.ts";
+    import {onDestroy, onMount} from 'svelte'
     import { page } from '$app/stores';
     import {redirect} from "@sveltejs/kit";
     import {goto} from "$app/navigation";
-    import { userdata } from "$lib/app/stores.ts";
+    import { user } from "$lib/app/stores.ts";
 
     onMount(async () => {
         const code = await $page.url.searchParams.get("code");
@@ -18,7 +19,8 @@
 
         try {
             // Get the authentication object using the user's code
-            const AuthRes = await axios.get('https://api.kbsl.dev/auth/discord?code=' + code.toString(), {
+            // const AuthRes = await axios.get('http://localhost:8090/auth/discord?code=' + code.toString(), {
+            const AuthRes = await axios.get(`${$apiBaseUrl}/auth/discord?code=${code.toString()}`, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
@@ -43,13 +45,26 @@
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
 
-            userdata.update(state => ({
-                ...state,
-                userSeq: AuthRes.data.data.userSeq,
-                userName: AuthRes.data.data.userName
-            }));
 
-            goto('/');
+            const unsubscribe = user.subscribe((value) => {
+                console.log('user changed:', value);
+            });
+
+            console.log(AuthRes.data);
+
+            user.update((user) => {
+                user.name = AuthRes.data.data.userName;
+                user.seq = AuthRes.data.data.userSeq;
+                return user;
+            });
+
+            onDestroy(() => {
+                unsubscribe();
+            });
+
+            console.log($user)
+
+            // goto('/');
         } catch (error) {
             console.log(error);
             goto('/');
