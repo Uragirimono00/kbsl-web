@@ -1,13 +1,16 @@
-import { writable } from "svelte/store";
+import {readable, writable} from "svelte/store";
 
 export interface Metadata {
     title?: string;
     description?: string;
     headline?: string;
 }
-const Userdata = {
-    userName: 'sample',
-    userSeq: 0
-};
-export const userdata = writable(Userdata);
+
+export const user = writable({
+    name: '',
+    seq: 0
+});
+export const twElementsLoaded = writable(false);
+
+export const apiBaseUrl = readable("https://api.kbsl.dev");
 export const metadata = writable<Metadata>({});

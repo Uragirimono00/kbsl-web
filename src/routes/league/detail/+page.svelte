@@ -1,6 +1,6 @@
 <script>
     import {onMount} from "svelte";
-    import Score from "$lib/components/Score.svelte";
+    import Score from "$lib/components/LeagueScore.svelte";
     import PopupContent from '$lib/components/PopupContent.svelte';
     import LeagueSong from "$lib/components/LeagueSong.svelte";
 
@@ -27,6 +27,7 @@
                     target: scoreElement,
                     props: {
                         songSeq: data.songsList[index].seq,
+                        leagueSeq: data.seq,
                         index: index
                     }
                 });
