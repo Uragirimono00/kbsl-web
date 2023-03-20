@@ -71,8 +71,7 @@
             headers: {
                 "Accept-language": "en\r\n",
                 "Content-type": "application/x-www-form-urlencoded\r\n",
-                "Content-Length": `${token_url_params.toString().length}\r\n`,
-                "Access-Control-Allow-Origin": "*"
+                "Content-Length": `${token_url_params.toString().length}\r\n`
             },
             body: token_url_params.toString(),
         });
