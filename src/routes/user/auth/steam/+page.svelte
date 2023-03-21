@@ -1,83 +1,93 @@
 <script>
     import {onMount} from "svelte";
-    import {page} from "$app/stores";
+    import { page } from '$app/stores';
     import axios from "axios";
+    import {apiBaseUrl, user} from "$lib/app/stores.ts";
+    import {goto} from "$app/navigation";
 
-    function loginWithSteam() {
-        // Set the OpenID endpoint URL
-        const openIdUrl = 'https://steamcommunity.com/openid/login';
-
-        // Create a new form element
-        const form = document.createElement('form');
-        form.setAttribute('method', 'post');
-        form.setAttribute('action', openIdUrl);
-
-        // Add the required OpenID fields to the form
-        const input1 = document.createElement('input');
-        input1.setAttribute('type', 'hidden');
-        input1.setAttribute('name', 'openid.mode');
-        input1.setAttribute('value', 'checkid_setup');
-        form.appendChild(input1);
-
-        const input2 = document.createElement('input');
-        input2.setAttribute('type', 'hidden');
-        input2.setAttribute('name', 'openid.ns');
-        input2.setAttribute('value', 'http://specs.openid.net/auth/2.0');
-        form.appendChild(input2);
-
-        const input3 = document.createElement('input');
-        input3.setAttribute('type', 'hidden');
-        input3.setAttribute('name', 'openid.identity');
-        input3.setAttribute('value', 'http://specs.openid.net/auth/2.0/identifier_select');
-        form.appendChild(input3);
-
-        const input4 = document.createElement('input');
-        input4.setAttribute('type', 'hidden');
-        input4.setAttribute('name', 'openid.claimed_id');
-        input4.setAttribute('value', 'http://specs.openid.net/auth/2.0/identifier_select');
-        form.appendChild(input4);
-
-        const input5 = document.createElement('input');
-        input5.setAttribute('type', 'hidden');
-        input5.setAttribute('name', 'openid.return_to');
-        input5.setAttribute('value', 'https://www.kbsl.dev/user/auth/steam');
-        form.appendChild(input5);
-
-        // Submit the form
-        document.body.appendChild(form);
-        form.submit();
-    }
     onMount(async () => {
+        if ($user.seq === 0) {
+            if (localStorage.getItem("accessToken") && $user.seq === 0) {
+                console.log("user 재 조회");
+                const response = await axios.get(`${$apiBaseUrl}/user/myinfo`, {
+                    params: {
+                        Authorization: `${localStorage.getItem("accessToken")}`
+                    }
+                });
+                user.update((user) => {
+                    user.name = response.data.data.userName;
+                    user.seq = response.data.data.seq;
+                    return user;
+                });
+            }
+            if ($user.seq === 0) {
+                alert("로그인이 필요한 페이지입니다!!");
+                goto("/");
+            }
+        }
+
+
         const steamOpenIdUrl = await $page.url.searchParams.get("openid.claimed_id");
-        const steamId = steamOpenIdUrl.match(/\d+/)[0];
+
+        let steamId = steamOpenIdUrl.match(/\d+/)[0];
         console.log(steamId);
 
-        const token_params = {
-            "openid.assoc_handle": await $page.url.searchParams.get("openid.assoc_handle"),
-            "openid.signed": await $page.url.searchParams.get("openid.signed"),
-            "openid.sig": await $page.url.searchParams.get("openid.sig"),
-            "openid.ns": "http://specs.openid.net/auth/2.0",
-            "openid.mode": "check_authentication",
-        }
-        for (const val of await $page.url.searchParams.get("openid.signed").split(",")) {
-            //@ts-ignore
-            token_params[`openid.${val}`] = await $page.url.searchParams.get(`openid.${val}`);
+        const url = `${$apiBaseUrl}/user/steam/${$user.seq}`;
+        const regex = /(\d{17})/; // matches 17 digits
+
+        if (steamId.includes("https" || "beatleader" || "scoresaber")) {
+            steamId = steamId.match(regex)[1]
         }
 
-        const token_url = new URL("https://steamcommunity.com/openid/login");
-        const token_url_params = new URLSearchParams(token_params);
+        if (steamId.length !== 17) {
+            alert("조회된 스팀 유저가 없습니다.");
+            goto("/user/addUser")
+            return;
+        }
 
-        console.log(token_params)
+        const requestBody = {
+            steamId: steamId
+        };
 
-        const user_result = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?key=ECE9CF33C5E4DB373E9348F80C600093&steamids=76561199257569878`, {
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded",
-                }
-            }
-        );
-        const json = await user_result.json();
+        await axios.put(url, requestBody, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            },
+        }).then(response => {
+            alert("steamId가 등록되었습니다!");
+            goto("/user/register");
+        }).catch(error => {
+            alert(error.response.data.message);
+            goto("/user/register");
+        })
 
-        console.log(json)
+
+        // const token_params = {
+        //     "openid.assoc_handle": await $page.url.searchParams.get("openid.assoc_handle"),
+        //     "openid.signed": await $page.url.searchParams.get("openid.signed"),
+        //     "openid.sig": await $page.url.searchParams.get("openid.sig"),
+        //     "openid.ns": "http://specs.openid.net/auth/2.0",
+        //     "openid.mode": "check_authentication",
+        // }
+        // for (const val of await $page.url.searchParams.get("openid.signed").split(",")) {
+        //     //@ts-ignore
+        //     token_params[`openid.${val}`] = await $page.url.searchParams.get(`openid.${val}`);
+        // }
+        //
+        // const token_url = new URL("https://steamcommunity.com/openid/login");
+        // const token_url_params = new URLSearchParams(token_params);
+        //
+        // console.log(token_params)
+        //
+        // const user_result = await axios.get(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002?key=ECE9CF33C5E4DB373E9348F80C600093&steamids=76561199257569878`, {
+        //         headers: {
+        //             "Content-type": "application/x-www-form-urlencoded",
+        //         }
+        //     }
+        // );
+        // const json = await user_result.json();
+        //
+        // console.log(json)
 
         // const token_res = await axios.post('https://steamcommunity.com/openid/login', {
         //     headers: {
@@ -92,5 +102,17 @@
 
     })
 </script>
+<div id="loading-spinner" class="flex bg-zinc-900 justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+    <div class="px-3 text-white">Steam ID 등록중입니다~!!</div>
+</div>
 
-<button on:click={loginWithSteam}>Log in with Steam</button>
+<style>
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .animate-spin {
+        animation: spin 2s linear infinite;
+    }
+</style>

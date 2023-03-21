@@ -5,15 +5,16 @@
     import {apiBaseUrl} from "$lib/app/stores.ts";
 
     export let leagueCount;
+    export let leagueStatusType;
 
     let res;
 
     async function loadData() {
         res = await axios.get(`${$apiBaseUrl}/league`, {
-            headers: {
-            },
+            headers: {},
             params: {
                 page: 0,
+                leagueStatusType: leagueStatusType,
                 elementCnt: leagueCount
             }
         });
@@ -24,7 +25,7 @@
 </script>
 {#if res}
     <div aria-label="Now League">
-        <div aria-label="Main" class="bg-zinc-800">
+        <div aria-label="Main">
             {#each res.data.data.content as {...args} }
                 <a href="/league/detail?{args.seq}">
                     <div class="gird grid-cols-1 gap-4 p-4">
@@ -32,9 +33,19 @@
                             <div class="flex items-center space-x-2 text-sm">
                                 <div><span class="text-blue-500 font-bold">#{args.seq}</span> {args.leagueStartDtime}
                                     ~ {args.leagueEndDtime}</div>
-                                <div class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg">
-                                    {args.leagueStatus}
-                                </div>
+                                {#if args.leagueStatus == "진행중"}
+                                    <div class="p-1.5 text-xs font-medium uppercase tracking-wider text-green-800 bg-green-200 rounded-lg">
+                                        {args.leagueStatus}
+                                    </div>
+                                {:else if args.leagueStatus == "대기중"}
+                                    <div class="p-1.5 text-xs font-medium uppercase tracking-wider text-yellow-800 bg-yellow-200 rounded-lg">
+                                        {args.leagueStatus}
+                                    </div>
+                                {:else if args.leagueStatus == "종료"}
+                                    <div class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg">
+                                        {args.leagueStatus}
+                                    </div>
+                                {/if}
                             </div>
                             <div class="flex items-center space-x-2 text-sm">
                                 <div class="flex">

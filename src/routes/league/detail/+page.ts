@@ -1,4 +1,5 @@
 import axios from "axios";
+//@ts-ignore
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

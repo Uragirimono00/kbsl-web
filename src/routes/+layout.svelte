@@ -29,7 +29,7 @@
     <!-- <meta property="og:image" content="%svelte.assets%/logo.png" /> -->
 </svelte:head>
 
-<div>
+<div class="min-h-screen bg-zinc-900">
     <Navbar />
     <slot />
     <Footer />

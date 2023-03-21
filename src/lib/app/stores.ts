@@ -10,7 +10,6 @@ export const user = writable({
     name: '',
     seq: 0
 });
-export const twElementsLoaded = writable(false);
 
 export const apiBaseUrl = readable("https://api.kbsl.dev");
 export const metadata = writable<Metadata>({});

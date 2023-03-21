@@ -19,7 +19,6 @@
 
         try {
             // Get the authentication object using the user's code
-            // const AuthRes = await axios.get('http://localhost:8090/auth/discord?code=' + code.toString(), {
             const AuthRes = await axios.get(`${$apiBaseUrl}/auth/discord?code=${code.toString()}`, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

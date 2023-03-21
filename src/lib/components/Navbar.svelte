@@ -52,7 +52,7 @@
             title: '🗡️League'
         },
         {
-            href: '/user/beatleader',
+            href: '/user/register',
             title: '💎AddUser',
         }
     ];
