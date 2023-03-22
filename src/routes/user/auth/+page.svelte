@@ -66,7 +66,7 @@
             goto('/');
         } catch (error) {
             console.log(error);
-            // goto('/');
+            goto('/');
         }
 
 

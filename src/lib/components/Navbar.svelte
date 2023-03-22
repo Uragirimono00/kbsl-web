@@ -131,7 +131,7 @@
 					<li>
 						<ActiveLink
 								{href}
-								baseClass="px-3 py-2 rounded-md text-1.5xl font-medium "
+								baseClass="px-3 py-2 rounded-md text-1xl font-medium "
 								activeClass="bg-gray-200 bg-gray-900 text-white "
 								defaultClass="text-white hover:text-blue-500 "
 						>
