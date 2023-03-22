@@ -67,7 +67,7 @@
                     return user;
                 });
             }
-            if ($user.seq === 0) {
+            if ($user.seq === 0 || $user.seq === 4) {
                 alert("로그인이 필요한 페이지입니다!!");
                 goto("/");
             }

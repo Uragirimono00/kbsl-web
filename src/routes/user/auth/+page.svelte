@@ -12,7 +12,7 @@
 
         if (!code){
             console.log('에러가 발생했습니다.');
-            // goto('/');
+            goto('/');
         }
 
         // console.log(code);
@@ -29,7 +29,7 @@
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 alert("인증에 실패하였습니다.")
-                // goto('/');
+                goto('/');
             }
 
             // console.log(AuthRes.data.data);
@@ -63,7 +63,7 @@
 
             console.log($user)
 
-            // goto('/');
+            goto('/');
         } catch (error) {
             console.log(error);
             // goto('/');
