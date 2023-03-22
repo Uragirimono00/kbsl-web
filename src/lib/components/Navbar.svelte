@@ -13,8 +13,6 @@
     });
 
     onMount(async () => {
-        await import('tw-elements');
-        console.log('tw-elements loaded');
         if (localStorage.getItem("accessToken") && $user.seq === 0) {
             console.log("user 재 조회");
             const response = await axios.get(`${$apiBaseUrl}/user/myinfo`, {
@@ -28,6 +26,11 @@
                 return user;
             });
         }
+		if ($user.seq === 3){
+			console.log("null data");
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
+		}
     })
 
     function logout() {
