@@ -48,46 +48,49 @@
 </script>
 
 <div class="score-list-{songSeq}">
-    {#if res}
-        <div>
-            <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Accuracy</th>
-                    <th>Score</th>
-                    <th>Replay</th>
-                    <th>Comment</th>
-                </tr>
-                {#each res.data.data.content as {...args}, index}
-                    <tr class="	">
-                        <td class="px-6 py-4">{index + 1}</td>
-                        <td class="flex items-center px-6 py-4"><img class="w-10 rounded-xl" src="{args.user.imageUrl}"
-                                                                     alt="profile">&nbsp{args.user.userName}</td>
-                        <td class="px-6 py-4">{(args.accuracy * 100).toFixed(3)}%</td>
-                        <td class="px-6 py-4">{args.modifiedScore}점</td>
-                        <td class="px-6 py-4">
-                            <button on:click={openPopup}>
-                                <img class="w-10" src="/replay.gif" alt="리플레이">
-                            </button>
-                            {#if isPopupOpen}
-                                <div class="overlay" on:click={closePopup}>
-                                    <PopupContent songId={args.scoreSeq} onClose={closePopup}/>
-                                </div>
-                            {/if}
-                        </td>
-                        <td class="px-6 py-4">{args.comment}</td>
-                    </tr>
-                {/each}
-            </table>
-        </div>
-
-    {/if}
+	{#if res}
+		<div>
+			<table>
+				<tr>
+					<th>Rank</th>
+					<th>Player</th>
+					<th>Accuracy</th>
+					<th>Score</th>
+					<th>Replay</th>
+					<th>Comment</th>
+				</tr>
+				{#each res.data.data.content as {...args}, index}
+					<tr class="	">
+						<td class="px-6 py-4">{index + 1}</td>
+						<td class="flex items-center px-6 py-4">
+							<img class="w-10 rounded-xl" src="{args.user.imageUrl}"
+							     alt="profile">&nbsp{args.user.userName}
+						</td>
+						<td class="px-6 py-4">{(args.accuracy * 100).toFixed(3)}%</td>
+						<td class="px-6 py-4">{args.modifiedScore}점</td>
+						<td class="px-6 py-4">
+							<button on:click={openPopup}>
+								<img class="w-10" src="/replay.gif" alt="리플레이">
+							</button>
+							{#if isPopupOpen}
+								<div class="overlay" on:click={closePopup}>
+									<PopupContent songId={args.scoreSeq} onClose={closePopup}/>
+								</div>
+							{/if}
+						</td>
+						<td class="px-6 py-4">{args.comment}</td>
+					</tr>
+				{/each}
+			</table>
+		</div>
+	{/if}
 </div>
 
 <style>
     @keyframes spin {
-        to { transform: rotate(360deg); }
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     .animate-spin {

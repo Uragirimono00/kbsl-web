@@ -26,6 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltech/routify": "^1.9.10",
+		"@tailwindcss/line-clamp": "^0.4.2",
 		"axios": "^1.3.4",
 		"carbon-icons-svelte": "^11.4.0",
 		"discord-api-types": "0.37.21",
