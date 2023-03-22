@@ -1,6 +1,7 @@
 <script>
     import {onMount} from 'svelte';
     import PopupContent from '$lib/components/PopupContent.svelte';
+    import Loading from '$lib/components/Loading.svelte';
     import axios from "axios";
     import {apiBaseUrl} from "$lib/app/stores.ts";
 
@@ -8,27 +9,21 @@
     export let leagueSeq;
     export let index;
 
-
     let res;
 
     async function loadData() {
-        const loadingSpinner = document.createElement('div');
-        loadingSpinner.setAttribute('id', 'loading-spinner');
-        loadingSpinner.classList.add('flex', 'bg-white', 'justify-center', 'items-center', 'py-4');
-        const spinner = document.createElement('div');
-        spinner.classList.add('animate-spin', 'rounded-full', 'h-32', 'w-32', 'border-t-2', 'border-b-2', 'border-gray-900');
-        loadingSpinner.appendChild(spinner);
-        const parent = document.querySelector(`#collapseExample${index + 1}`);
-        parent.appendChild(loadingSpinner);
-        res = await axios.get(`${$apiBaseUrl}/league/${leagueSeq}/${songSeq}`, {
+        await axios.get(`${$apiBaseUrl}/league/${leagueSeq}/${songSeq}`, {
             headers: {},
             params: {
                 page: 0,
                 elementCnt: 30
             }
+        }).then(response => {
+            res = response;
+            const loadingElement = document.querySelector(`.loading-${songSeq}`);
+            loadingElement.classList.add('fade-out');
+            loadingElement.style.display="none";
         });
-
-        loadingSpinner.style.display = 'none';
     }
 
     onMount(() => {
@@ -47,7 +42,8 @@
     }
 </script>
 
-<div class="score-list-{songSeq}">
+<div class="score-list-{songSeq} bg-white space-y-3 px-4 py-2 rounded-lg shadow mx-5">
+
 	{#if res}
 		<div>
 			<table>
@@ -84,6 +80,7 @@
 			</table>
 		</div>
 	{/if}
+
 </div>
 
 <style>

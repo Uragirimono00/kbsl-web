@@ -17,8 +17,8 @@
 
 </script>
 {#if args}
-	<div class="fade-in">
-		<button class="gird grid-cols-1 gap-4 py-4 w-full"
+	<div class="fade-in bg-white space-y-3 px-4 py-2 rounded-lg shadow m-5">
+		<button class="gird grid-cols-1 gap-4 w-full"
 		        on:click
 		        type="button" q
 		        data-te-collapse-init
@@ -29,9 +29,10 @@
 		        aria-expanded="false"
 		        aria-controls="collapseExample{index + 1}"
 		>
-			<div class="bg-white space-y-3 p-4 rounded-lg shadow">
+			<div class="">
 				<div class="flex items-center space-x-2 text-sm">
-					<div><span class="text-blue-500 font-bold">#{index + 1}</span> {args.songModeType} -
+					<div class="p-2">
+						<span class="text-blue-500 font-bold">#{index + 1}</span> {args.songModeType} -
 						{#if args.songDifficulty === "ExpertPlus"}
 							<span
 									class="p-1.5 text-white text-xs font-medium uppercase tracking-wider text-green-800 bg-purple-700 rounded-lg">Expert Plus</span>

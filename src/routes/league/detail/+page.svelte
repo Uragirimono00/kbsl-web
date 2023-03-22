@@ -1,11 +1,13 @@
 <script>
     import {onMount} from "svelte";
-    import Score from "$lib/components/LeagueScore.svelte";
     import PopupContent from '$lib/components/PopupContent.svelte';
     import LeagueSong from "$lib/components/LeagueSong.svelte";
+    import Score from "$lib/components/LeagueScore.svelte";
+    import Loading from "$lib/components/Loading.svelte";
 
     onMount(async () => {
         await import('tw-elements');
+
 
         const clickElements = document.querySelectorAll('.click');
         clickElements.forEach((clickElement, index) => {
@@ -22,7 +24,6 @@
                 const scoreElement = document.createElement('div');
                 scoreElement.classList.add(`score-list${index + 1}`);
 
-                // ScoreComponent를 생성하고 scoreElement에 추가합니다.
                 const scoreComponent = new Score({
                     target: scoreElement,
                     props: {
@@ -37,6 +38,8 @@
                 collapseElement.classList.remove('hidden');
             });
         });
+
+
     });
 
     export let data;
@@ -49,7 +52,8 @@
             <LeagueSong args={args} index = {index} />
         </div>
         <div class="!visible hidden" id="collapseExample{index + 1}" data-te-collapse-item>
-            <div class="rounded-lg bg-white p-6 shadow-lg">
+            <div class="rounded-lg shadow-lg">
+                    <Loading className="loading-{args.seq} bg-white px-4 rounded-lg shadow mx-5" />
                 <!--점수 컴포넌트-->
             </div>
         </div>

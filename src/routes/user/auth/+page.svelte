@@ -12,7 +12,7 @@
 
         if (!code){
             console.log('에러가 발생했습니다.');
-            goto('/');
+            // goto('/');
         }
 
         // console.log(code);
@@ -20,16 +20,16 @@
         try {
             // Get the authentication object using the user's code
             const AuthRes = await axios.get(`${$apiBaseUrl}/auth/discord?code=${code.toString()}`, {
-                headers: {
+                headers: {333
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
             });
 
-            if(AuthRes.data.data.userSeq === 3){
+            if(AuthRes.data.data.userSeq === 4){
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 alert("인증에 실패하였습니다.")
-                goto('/');
+                // goto('/');
             }
 
             // console.log(AuthRes.data.data);
@@ -66,7 +66,7 @@
             // goto('/');
         } catch (error) {
             console.log(error);
-            goto('/');
+            // goto('/');
         }
 
 
