@@ -15,7 +15,7 @@
         await axios.get(`${$apiBaseUrl}/league/${leagueSeq}/${songSeq}`, {
             headers: {},
             params: {
-                page: 0,
+                page: 1,
                 elementCnt: 30
             }
         }).then(response => {

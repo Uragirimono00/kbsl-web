@@ -13,7 +13,7 @@
         res = await axios.get(`${$apiBaseUrl}/league`, {
             headers: {},
             params: {
-                page: 0,
+                page: 1,
                 leagueStatusType: leagueStatusType,
                 elementCnt: leagueCount
             }
